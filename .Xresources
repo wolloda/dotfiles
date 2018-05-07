@@ -1,0 +1,15 @@
+rofi.opacity: 100
+rofi.width: 60
+rofi.lines: 15
+rofi.columns: 1
+rofi.font: Roboto Condensed 14
+rofi.color-enabled: true
+! background,border,separator
+rofi.color-window: black,cyan,cyan
+! background,foreground,alt background,high background, high foreground
+rofi.color-normal: black,gray,black,cyan,black
+rofi.color-active: cyan,black,black,cyan,black
+rofi.color-urgent: red,white,black,red,white
+rofi.bw: 2
+rofi.location: 0
+rofi.padding: 25

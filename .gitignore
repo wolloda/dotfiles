@@ -1,0 +1,17 @@
+# vim
+.vim/bundle/
+.vim/tmp/
+.vim/session/
+
+# emacs
+.emacs.d/elpa/
+.emacs.d/auto-save-list/
+.emacs.d/backup/
+.emacs.d/projectile-bookmarks.eld
+
+# ranger
+.config/ranger/bookmarks/
+.config/ranger/history/
+.config/ranger/tagged/
+
+*.swp

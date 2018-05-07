@@ -1,0 +1,7 @@
+set surround
+set showmode
+
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch

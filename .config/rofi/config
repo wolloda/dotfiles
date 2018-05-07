@@ -1,0 +1,18 @@
+rofi.opacity: 100
+rofi.width: 40
+rofi.lines: 15
+rofi.columns: 1
+rofi.font: Source Code Pro For Powerline 12
+rofi.color-enabled: true
+
+! background,border,separator
+rofi.color-window: #292a44, ,
+
+! background,foreground,alt background,high background, high foreground
+rofi.color-normal: #292a44,gray,#292a44,#678bdc,#292a44
+rofi.color-active: #678bdc,#292a44,#292a44,#678bdc,#292a44
+rofi.color-urgent: red,white,#292a44,red,white
+
+rofi.bw: 2
+rofi.location: 0
+rofi.padding: 15
