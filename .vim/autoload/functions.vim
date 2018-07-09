@@ -1,3 +1,6 @@
+" vim: nolist:
+
+" source VIMRC & GVIMRC (if present)
 function! functions#LoadVIMRCs()
 	source $MYVIMRC
 	if has('gui_running') && !empty($MYGVIMRC)
@@ -5,6 +8,7 @@ function! functions#LoadVIMRCs()
 	endif
 endfunction
 
+" create dir with given name
 function! functions#CreateDir(path)
 	let path_name = expand(a:path)
 	if !isdirectory(path_name)
@@ -12,58 +16,42 @@ function! functions#CreateDir(path)
 	endif
 endfunction
 
+" cycle between spelling languages
 function! functions#switchSpellLang() abort
 	let l:languages = ['en', 'cs']
-
     let i = index(l:languages, &spelllang)
     let j = (i + 1) % len(l:languages)
     let &spelllang = l:languages[j]
 	let &spellfile = $HOME . '/dotfiles/.vim/spell/' . l:languages[j] . '.utf-8.add'
 endfunction
 
-function! functions#User1Highlight() abort
-	redir => l:StatusLineHi
-		silent execute ('highlight StatusLine')
-	redir END
-	let l:fields = ['term', 'cterm', 'ctermfg', 'ctermbg', 'gui', 'guifg', 'guibg']
-	let l:string = ''
-	for i in [0, 1, 2, 3, 4, 5, 6]
-		let l:matchGroup = matchstr(l:StatusLineHi, l:fields[i].'=\zs\S*')
-		if !empty(l:matchGroup)
-			" make StatusLineNC italic, so as to avoid filling a statusline with carets
-			if i == 0 || i == 1 || i == 4
-				execute ('highlight StatusLineNC ' . l:fields[i] . "=" .  l:matchGroup . ",italic ")
-				let l:string .= l:fields[i] . "=" .  l:matchGroup . " "
-			elseif i == 2
-				let l:string .= l:fields[i] . "=" .  l:matchGroup . " "
-			elseif i == 3
-				let l:string .= l:fields[i] . "=203 "
-			endif
-
-			if has('gui')
-				if i == 5
-					let l:string .= l:fields[i] . "=" .  l:matchGroup . " "
-				elseif  i == 6
-					let l:string .= l:fields[i] . "=#c9666b"
-				endif
-			endif
-		endif
-	endfor
-	execute ('highlight User1 ' . l:string)
+" create markdown headings
+function! functions#markdownHeading(count)
+	let headerString = repeat("#", a:count)
+	execute 'normal I' . headerString . " "
+	startinsert! " `A`
 endfunction
 
-function! functions#formatGitgutterHunks() abort
-	let l:hunks = GitGutterGetHunkSummary()
-	let l:hunk_symbols = ['+', '~', '-']
-	let l:string = ''
-	if !empty(l:hunks)
-		for i in [0, 1, 2]
-			if (winwidth(0) > 100) || l:hunks[i] > 0
-				if l:hunks[i] > 0
-					let string .= printf('%s%s ', l:hunk_symbols[i], l:hunks[i])
-				endif
-			endif
-		endfor
-	endif
-	return string
+command! -nargs=1 InsertMarkdownHeading call functions#markdownHeading(<args>)
+
+" helper function for vim-plug (load plugins only if a condition is met)
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+" remove trailing whitespace
+function! functions#TrimWhitespace() abort
+	let l:save = winsaveview()
+	execute "keepjumps %s/\\s\\+$//ge"
+	call winrestview(l:save)
+endfunction
+
+function! functions#InstallVimPlug() abort
+		let l:path = expand("~")
+		let l:path .= '/dotfiles/.vim/autoload/plug.vim'
+		if empty(glob(l:path)) && executable("curl")
+			execute 'silent !curl -fLo ' . l:path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+			autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+		endif
 endfunction

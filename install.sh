@@ -1,36 +1,23 @@
 #!/usr/bin/env bash
 
-#Symlink `dotfiles/.bashrc`  
-ln ~/dotfiles/.bashrc ~/.bashrc
+SCRIPTLOC=${BASH_SOURCE%/*};
 
-#Symlink `dotfiles/.bash_profile`  
-ln ~/dotfiles/.bash_profile ~/.bash_profile
+for S in $(find  ${SCRIPTLOC} -maxdepth 1 -type f \
+	| grep -v Keypirinha  \
+	| grep -v README \
+	| grep -v gitignore \
+	| grep -v install);
 
-#Symlink `dotfiles/.compton.conf` to `~/.config`  
-ln ~/dotfiles/.compton.conf ~/.config/compton.conf
+do
+	rm ~/$S;
+	ln -s /home/wollf/dotfiles/$S /home/wollf/$S;
+done
 
-#Symlink `dotfiles/.tmux.conf` (possibly need to run `tmux source ~/.tmux.conf`)  
-ln ~/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s bin/ ~/bin
+ln -s .emacs.d/ ~/.emacs.d/
+ln -s .config/.compton.conf ~/.config/compton.conf
+ln -s .config/.i3/ ~/.config/i3/
+ln -s .config/polybar/ ~/.config/polybar/
+ln -s .config/rofi/ ~/.config/rofi/
 
-#Symlink `dotfiles/.ideavimrc`  
-ln ~/dotfiles/.ideavimrc ~/.ideavimrc
-
-#Symlink `dotfiles/.gitconfig`  
-ln ~/dotfiles/.gitconfig ~/.gitconfig
-
-#Symlink `dotfiles/.i3` to `~/.i3`  
-#ln -s ~/dotfiles/.i3/ ~/.config/i3
-
-#Symlink `dotfiles/polybar` to `~/.config/polybar`  
-#ln -s ~/dotfiles/polybar/ ~/.config/polybar
-
-#Symlink `dotfiles/rofi` to `~/.config/rofi` & run `xrdb -load ~/.config/rofi/config`
-ln -s ~/dotfiles/rofi/ ~/.config/rofi
-xrdb -load ~/.config/rofi/config
-
-#symlink `dotfiles/.emacs` to `%USERPROFILE%\AppData\Roaming\.emacs` (used for emacs / spacemacs switching)
-#ln -s ~/dotfiles/.emacs C:/Users/kanav/AppData/Roaming/.emacs
-
-#set `$HOME` to ~ or symlink  `dotfiles/.emacs.d` to  `%USERPROFILE%\AppData\Roaming\.emacs.d` (keeps ~ at C:\Users\username\AppData\Roaming)
-#ln -s ~/dotfiles/.emacs.d/ C:/Users/kanav/AppData/Roaming/.emacs.d/
-
+git clone https://github.com/VundleVim/Vundle.vim.git ${SCRIPTLOC}/.vim/bundle/Vundle.vim

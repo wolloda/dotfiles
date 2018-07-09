@@ -2,6 +2,7 @@
 .vim/bundle/
 .vim/tmp/
 .vim/session/
+.vim/autoload/plug.vim
 
 # emacs
 .emacs.d/elpa/
@@ -10,8 +11,8 @@
 .emacs.d/projectile-bookmarks.eld
 
 # ranger
-.config/ranger/bookmarks/
-.config/ranger/history/
-.config/ranger/tagged/
+.config/ranger/bookmarks*
+.config/ranger/history
+.config/ranger/tagged
 
 *.swp

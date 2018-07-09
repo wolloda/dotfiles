@@ -34,7 +34,7 @@ re-downloaded in order to locate PACKAGE."
         (package-refresh-contents)
         (require-package package min-version t)))))
 
-(setq package-enable-at-startup nil)(package-initialize)
+(setq package-enable-at-startup nil)
 
 (defvar helm-use-frame-when-more-than-two-windows nil)
 
@@ -143,17 +143,15 @@ re-downloaded in order to locate PACKAGE."
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (gruvbox-dark-soft)))
+ '(custom-enabled-themes '(gruvbox-dark-soft))
  '(custom-safe-themes
-   (quote
-    ("42b9d85321f5a152a6aef0cc8173e701f572175d6711361955ecfb4943fe93af" "75c5c39809c52d48cb9dcbf1694bf2d27d5f6fd053777c194e0b69d8e49031c0" "ad109c1ad8115573f40e22ac2b996693b5d48052fa37b5919f70ea37c62a965e" default)))
+   '("62c81ae32320ceff5228edceeaa6895c029cc8f43c8c98a023f91b5b339d633f" "42b9d85321f5a152a6aef0cc8173e701f572175d6711361955ecfb4943fe93af" "75c5c39809c52d48cb9dcbf1694bf2d27d5f6fd053777c194e0b69d8e49031c0" "ad109c1ad8115573f40e22ac2b996693b5d48052fa37b5919f70ea37c62a965e" default))
  '(git-gutter:added-sign "•")
  '(git-gutter:deleted-sign "•")
  '(git-gutter:modified-sign "•")
  '(markdown-command "C:/Users/kanav/AppData/Local/Pandoc/pandoc.exe")
  '(package-selected-packages
-   (quote
-    (flycheck evil-nerd-commenter spaceline evil-magit magit markdown-mode markdown-mode+ org-evil gruvbox-theme helm evil-goggles evil))))
+   '(flycheck evil-nerd-commenter spaceline evil-magit magit markdown-mode markdown-mode+ org-evil gruvbox-theme helm evil-goggles evil)))
 
 ;; EVIL MODE
 

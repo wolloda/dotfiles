@@ -70,7 +70,7 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 [bar/main]
-monitor = DVI-D-2
+monitor = DVI-D-1
 width = 100%
 height = 28
 offset-x = 0
@@ -96,13 +96,12 @@ font-1 = FontAwesome:size=12;1
 
 modules-left = i3
 modules-center = title
-modules-right = volume xkeyboard date powermenu
+modules-right = audioOutput volume xkeyboard date powermenu
 
 tray-position = right
 tray-maxsize = 33
 
 wm-restack = i3
-
 
 
 [module/xwindow]
@@ -281,11 +280,11 @@ format-disconnected =
 type = internal/date
 interval = 1.0
 
-date = %d-%m-%Y
-date-alt = " %Y-%m-%d"
+date = %d/%m/%Y
+;date-alt = " %Y-%m-%d"
 
 time = %H:%M
-time-alt = %H:%M:%S
+;time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -377,27 +376,39 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = 
+label-open = power
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
+menu-0-0 = lock
+menu-0-0-exec = ~/bin/lock.sh
+menu-0-1 = suspend
+menu-0-1-exec = ~/bin/lock.sh && systemctl suspend
+menu-0-2 = reboot
+menu-0-2-exec = sudo reboot
+menu-0-3 = power off
+menu-0-3-exec = sudo poweroff
 
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+menu-1-0 = reboot
+menu-1-0-exec = sudo reboot
+;menu-1-1 = cancel
+;menu-1-1-exec = menu-open-0
 
 menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
+;menu-2-1 = cancel
+;menu-2-1-exec = menu-open-0
+
+[module/audioOutput]
+type = custom/script
+;label = "audio"
+exec = ~/.config/polybar/bin/audio_show_device.sh
+interval = 0
+click-left = ~/.config/polybar/bin/audio.sh
+
 
 [settings]
 screenchange-reload = true

@@ -11,32 +11,13 @@ font pango:monospace 8
 #font pango:DejaVu Sans Mono 8
 
 
+#####################
+#   SET VARIABLES   #
+#####################
 
-
-# set variables
 set $term --no-startup-id gnome-terminal
-
-
-# launch on startup
-
-# polybar
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-
-# set background
-exec --no-startup-id feh --bg-fill ~/Pictures/ooo.png
-
-# start flux
-exec --no-startup-id ~/Downloads/xflux -l 49.6 -g 18.5
-
-# launch compton (making see-through terminals)
-exec_always --no-startup-id compton
-
-# launch dropbox
-exec --no-startup-id dropbox start -i
-
-# launch spotify (on workspace 10)
-exec --no-startup-id spotify
-for_window [class="^Spotify$"] move to workspace 10
+# current audio output sink
+set $sink `pactl list short sinks | grep RUNNING | cut -f1`
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -45,28 +26,53 @@ set $down j
 set $left h
 set $right l
 
+# super
 set $mod Mod4
+# alt
 set $sup Mod1
 
-# use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+#####################
+# LAUNCH ON STARTUP #
+#####################
 
-# start a terminal
-bindsym $mod+Return exec $term
+# polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-# kill focused window
-bindsym $mod+Shift+q kill
+# set background
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/blurred.jpg
 
-# start rofi instead of dmenu (a program launcher)
-exec_always --no-startup-id exec xrdb load ~/.config/rofi/config
-bindsym $sup+d exec rofi -show run
-bindsym $sup+shift+d exec rofi -modi drun -show drun
-bindsym $sup+r exec rofi -show window
+# flux
+exec --no-startup-id ~/Downloads/xflux -l 49.6 -g 18.5
 
-# audio controls
-set $sink `pactl list short sinks | grep RUNNING | cut -f1`
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ | exec pactl set-sink-mute $sink 0
-bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- | exec pactl set-sink-mute $sink 0
+# launch compton (making see-through terminals)
+exec_always --no-startup-id compton
+
+# dropbox
+exec --no-startup-id dropbox start -i
+
+# discord (on workspace 9)
+#exec --no-startup-id discord
+#for_window [class="^Discord$"] move to workspace 9
+
+# rescueTime
+exec --no-startup-id rescuetime
+
+# spotify (workspace 10)
+exec --no-startup-id spotify
+for_window [class="^Spotify$"] move to workspace 10
+
+
+#####################
+#   AUDIO CONTROLS  #
+#####################
+
+# volume up
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink +5% ; exec --no-startup-id pactl set-sink-mute $sink 0
+
+# volume down
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink -5% ; exec --no-startup-id pactl set-sink-mute $sink 0
+
+# mute
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink toggle
 
 # Media player controls
@@ -74,21 +80,55 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# switch between keyboard layouts
-exec --no-startup-id "setxkbmap -model pc105 -layout us,cz -option grp:alt_shift_toggle"
-
-# start programs
+#####################
+#   START PROGRAMS  #
+#####################
 
 # Chrome
 bindsym $sup+q exec --no-startup-id google-chrome
+bindsym $sup+Shift+q exec --no-startup-id firefox
 
 # Spotify
 bindsym $sup+w exec --no-startup-id spotify
 
-# launch file browser (floating)
+# Ranger (floating)
 bindsym $sup+f exec  $term --role="Floating" -e ranger
 for_window[window_role="Floating"] floating enable
 
+# Default file browser
+bindsym $sup+Shift+f exec --no-startup-id xdg-open ~
+
+# Terminal
+bindsym $mod+Return exec $term
+
+# Mail client
+bindsym $sup+m exec --no-startup-id thunderbird
+
+# Rofi
+exec_always --no-startup-id exec xrdb load ~/.config/rofi/config
+bindsym $sup+d exec rofi -show run
+bindsym $sup+shift+d exec rofi -modi drun -show drun
+bindsym $sup+r exec rofi -show window
+
+##################
+#      MISC      #
+##################
+
+# switch between keyboard layouts
+exec --no-startup-id "setxkbmap -model pc105 -layout us,cz -option grp:alt_shift_toggle"
+
+# lock screen
+bindsym $mod+ctrl+l exec --no-startup-id ~/dotfiles/bin/lock.sh 
+
+##################
+#  i3 controls   #
+##################
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+Shift+q kill
 
 # change focus
 bindsym $mod+$left focus left
@@ -147,6 +187,9 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 
+# remember last used workspace
+workspace_auto_back_and_forth yes
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -191,6 +234,11 @@ mode "resize" {
         bindsym $up         resize shrink height 10 px or 10 ppt
         bindsym $right      resize grow width 10 px or 10 ppt
 
+        bindsym Shift+$left       resize shrink width 50 px or 50 ppt
+        bindsym Shift+$down       resize grow height 50 px or 50 ppt
+        bindsym Shift+$up         resize shrink height 50 px or 50 ppt
+        bindsym Shift+$right      resize grow width 50 px or 50 ppt
+
         # same bindings, but for the arrow keys
         bindsym Left        resize shrink width 10 px or 10 ppt
         bindsym Down        resize grow height 10 px or 10 ppt
@@ -205,8 +253,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-
-# i3 gaps
+##################
+#    i3 gaps     #
+##################
 
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
@@ -250,8 +299,6 @@ for_window [class="^.*"] border pixel 0
 smart_gaps on
 gaps inner 10
 gaps outer 8
-
-
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status

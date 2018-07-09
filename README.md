@@ -13,7 +13,7 @@
 
 # Requirements
 * fzf
-* ag / ack / ripgrep / pt
+* **ag** / ack / ripgrep / pt
 * (exuberant) ctags
 * [LLVM](https://llvm.org/) (Windows)
 * [Chocolatey](https://chocolatey.org/) (Windows)
@@ -25,7 +25,7 @@ Download necessary files
 git clone https://gitlab.fi.muni.cz/xkana1/dotfiles.git ~/dotfiles
 ```
 
-apart from programs mentioned above, one needs to download following ones too:
+apart from programs mentioned above, following programs need to be installed too (Linux)
 
 * playerctl
 * pandoc
@@ -45,7 +45,7 @@ set filepaths in [init.el](.emacs.d/init.el)
 
 ### Linux / Mac OS
 
-Symlink `.emacs.d/` to `~/dotfiles/.emacs.d/`
+Symlink `~/dotfiles/.emacs.d/` to `~/.emacs.d/`
 Symlink `dotfiles/.emacs` to `~/.emacs`
 
 ## VIM
@@ -78,6 +78,10 @@ Symlink `dotfiles/.bashrc`
 Symlink `dotfiles/.bash_profile`  
 Symlink `dotfiles/.config/.compton.conf` to `~/.config/compton.conf`  
 Symlink `dotfiles/.tmux.conf` (possibly need to run `tmux source ~/.tmux.conf` or `:source-file ~/.tmux.conf` from within tmux)  
+
+Install tmux plugin manager
+```git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm```
+
 Symlink `dotfiles/.ideavimrc`  
 Symlink `dotfiles/.gitconfig`  
 

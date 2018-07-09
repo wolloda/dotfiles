@@ -1,3 +1,5 @@
+" vim: set foldmethod=marker nolist:
+
 setlocal tabstop=8
 setlocal expandtab
 setlocal softtabstop=4
